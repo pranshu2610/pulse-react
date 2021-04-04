@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import './App.scss';
+import Container from '@material-ui/core/Container';
+import DashboardPage from './pages/dashboardPage/dashboardPage';
+import Navbar from './components/navbar/navbar';
 
 function App() {
+  const [navOption,setNavOption] = useState(0)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container disableGutters={true} maxWidth="md">
+      {
+        navOption===0 ?
+        <DashboardPage/>
+        : null
+      }
+      {/* {
+        navOption===1 ?
+
+        : null
+      }
+      {
+        navOption===2 ?
+        
+        : null
+      } */}
+      <div className="nav-div">
+        <Navbar navOption={navOption} onNavPress={setNavOption}/>
+      </div>
+    </Container>
   );
 }
 

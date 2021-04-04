@@ -1,0 +1,16 @@
+.location-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px 10px;
+  height: 30px;
+  width: max-content;
+  background-color: rgb(149, 197, 233);
+  border-radius:40px;
+  color: rgb(0, 64, 112);
+  cursor: pointer;
+  .location-text {
+    margin: 0 10px;
+    font-weight: 500;
+  }
+}
