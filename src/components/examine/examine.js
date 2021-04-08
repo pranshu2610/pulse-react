@@ -52,7 +52,7 @@ const Examine = ({closeTheExamine}) =>{
       redirect: 'follow'
     };
     
-    fetch("http://487431642872.ngrok.io/home/user/Examine", requestOptions)
+    fetch("https://487431642872.ngrok.io/home/user/Examine", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
