@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.scss';
 import Container from '@material-ui/core/Container';
 import DashboardPage from './pages/dashboardPage/dashboardPage';
+import EmergencyPage from './pages/emergencyPage/emergencyPage';
 import Navbar from './components/navbar/navbar';
 
 function App() {
@@ -13,11 +14,12 @@ function App() {
         <DashboardPage/>
         : null
       }
-      {/* {
+      {
         navOption===1 ?
-
+        <EmergencyPage />
         : null
       }
+      {/*
       {
         navOption===2 ?
         

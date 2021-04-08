@@ -11,6 +11,7 @@ import LocationBox from '../../components/locationBox/locationBox';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import './dashboardPage.scss'
+import Examine from '../../components/examine/examine';
 
 const userProfile = {
   name: "Rick Sanchez",
@@ -20,8 +21,14 @@ const DashboardPage = () => {
   const chubbyStyles = useGradientBtnStyles({ chubby: true });
   const [userName, setUserName] = useState(userProfile.name);
   const [location, setLocation] = useState(userProfile.location);
+  const [viewExamine, setExamine] = useState(false);
   return(
     <div className="dashboard-canvas">
+      {
+        viewExamine ? 
+        <Examine closeTheExamine={()=>setExamine(false)}/>
+        : null
+      }
       <div className="dash-header">
         <IconButton icon={<SearchIcon/>}/>
         <LocationBox location={location}/>
@@ -39,7 +46,7 @@ const DashboardPage = () => {
           <p className="dash-img-text">Answer simple questions to predict the probable disease</p>
         </div>
         <div className="dash-button">
-          <Button classes={chubbyStyles}>Test Now</Button>
+          <Button onClick={()=>setExamine(true)} classes={chubbyStyles}>Test Now</Button>
         </div>
       </div> 
       <div className="dash-feature">
