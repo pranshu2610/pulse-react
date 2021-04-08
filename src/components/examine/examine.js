@@ -6,9 +6,10 @@ import {Button,Checkbox} from '@material-ui/core';
 import { useNeonCheckboxStyles } from '@mui-treasury/styles/checkbox/neon';
 import {APIRequestHelper} from '../../helpers/APIRequest';
 
-const sampleData = ["chills","runny_nose","Mild Fever","Vommiting","Fatigue"];
+const sampleData = ["chills","chest_pain","high_fever","pain_behind_the_eyes","constipation"];
 
 const setRawData = (options) => {
+  // console.log(options)
   let a = {}
   options.forEach(item => {
     a[item] = false
@@ -19,6 +20,7 @@ const messageStack = []
 const Examine = ({closeTheExamine}) =>{
   const [userOptions, setUserOptions] = useState(setRawData(sampleData))
   const [step,setStep] = useState(0)
+  const [showRes,setShowRes] = useState()
   const neonStyles = useNeonCheckboxStyles();
 
   const pushMessageStack = (msg) => {
@@ -34,28 +36,12 @@ const Examine = ({closeTheExamine}) =>{
     }
     pushMessageStack({sender: "user", content: requestBody})
 
-      // fetch(`https://08e1a4433d39.ngrok.io/`, {
-      //   headers : { 
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json'
-      //    }
-  
-      // })
-      //   .then(response => response.json())
-      //   .then(data => console.log(data));
-
-      // http://08e1a4433d39.ngrok.io/api/v1/users/create
-    // let responseJSON = await APIRequestHelper.post('/api/v1/users/create',{
-    //   username: "user",
-    //   symptoms: requestBody
-    // })
-    // let responseJSON = await APIRequestHelper.post('/api/v1/users/create')
-    // console.log(responseJSON)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
+    console.log("INPUT",requestBody);
     var raw = JSON.stringify({
-      "username": "Pranshu",
+      "username": "koko",
       "symptoms": requestBody
     });
     
@@ -66,11 +52,37 @@ const Examine = ({closeTheExamine}) =>{
       redirect: 'follow'
     };
     
-    fetch("http://08e1a4433d39.ngrok.io/home/user/Examine", requestOptions)
+    fetch("http://487431642872.ngrok.io/home/user/Examine", requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
+      .then(result => {
+        console.log(result);
+        let jsonRes = JSON.parse(result)
+        if (jsonRes.symptoms) {
+          setUserOptions(setRawData(jsonRes.symptoms))
+        }
+        else {
+          setShowRes(jsonRes)
+        }
+      })
       .catch(error => console.log('error', error));
   }
+  // {
+  //   "predicted_diseases": [
+  //     "Common Cold", 
+  //     "Allergy", 
+  //     "Malaria", 
+  //     "(vertigo) Paroymsal  Positional Vertigo", 
+  //     "Pneumonia"
+  //   ], 
+  //   "probabilities": [
+  //     0.44717153906822205, 
+  //     0.06784116476774216, 
+  //     0.054890453815460205, 
+  //     0.04361933842301369, 
+  //     0.040818583220243454
+  //   ], 
+  //   "status": 200
+  // }
 
   const setCheckboxData = (option) => {
     let obj = JSON.parse(JSON.stringify(userOptions)) 
@@ -133,18 +145,30 @@ const Examine = ({closeTheExamine}) =>{
     <div className="examine-chatbox">
       {messages}
     </div>
-    <div className="examine-options">
-      <p className="options-title">Select the Options</p>
-      {checkboxes}
-      <div className="examine-buttons">
-      <Button onClick={closeTheExamine} variant="outlined" color="secondary">
-        Close
-      </Button>
-      <Button onClick={() => {sendMessageToServer(); setStep(step+1)}} variant="outlined" color="primary">
-        Next
-      </Button>
+    {
+      !showRes ? 
+      <div className="examine-options">
+        <p className="options-title">{checkboxes.length>1 ? "Select the Options" : "Are you suffering from this symptom? You can also Tap Next to skip"}</p>
+        {checkboxes}
+        <div className="examine-buttons">
+        <Button onClick={closeTheExamine} variant="outlined" color="secondary">
+          Close
+        </Button>
+        <Button onClick={() => {sendMessageToServer(); setStep(step+1)}} variant="outlined" color="primary">
+          Next
+        </Button>
+        </div>
       </div>
-    </div>
+      :
+      <div className="examine-options">
+        <p className="options-title">You are likely suffering from {showRes.predicted_diseases[0]} with {(showRes.probabilities[0]*100).toFixed(2)}% probability</p>
+        <div className="examine-buttons">
+        <Button onClick={closeTheExamine} variant="outlined" color="secondary">
+          Go back to Dashboard
+        </Button>
+        </div>
+      </div>
+    }
   </div>
 )};
 
