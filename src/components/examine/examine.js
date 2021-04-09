@@ -132,7 +132,7 @@ const Examine = ({closeTheExamine}) =>{
 
   return (
   <div className="examine-canvas">
-    <div className="examine-chatbox">
+    <div className={`examine-chatbox ${showRes ? 'result' : null}`}>
       {messages}
     </div>
     {
@@ -150,8 +150,13 @@ const Examine = ({closeTheExamine}) =>{
         </div>
       </div>
       :
-      <div className="examine-options">
-        <p className="options-title">You are likely suffering from {showRes.predicted_diseases[0]} with {(showRes.probabilities[0]*100).toFixed(2)}% probability</p>
+      <div className="examine-options result">
+        <p className="options-title">You are likely suffering from {showRes.predicted_diseases[0]} with {(showRes.probabilities[0]*100).toFixed(2)}% chances</p>
+        <p className="options-content">{showRes.description}</p>
+        {showRes.precautions.map(item => (
+          <p className="options-content">✨ {item}</p>
+        ))
+        }
         <div className="examine-buttons">
         <Button onClick={closeTheExamine} variant="outlined" color="secondary">
           Go back to Dashboard

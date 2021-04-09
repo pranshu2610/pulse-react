@@ -7,7 +7,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import './emergencyPage.scss'
 import SimpleMap from '../../components/googlemap/googlemap';
 import {API_ENDPOINT} from '../../helpers/APIRequest';
 import './emergencyPage.scss';

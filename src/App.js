@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import DashboardPage from './pages/dashboardPage/dashboardPage';
 import EmergencyPage from './pages/emergencyPage/emergencyPage';
 import Navbar from './components/navbar/navbar';
+import ExpensePage from './pages/expenseTrackerPage/expenseTrackerPage';
 
 function App() {
   const [navOption,setNavOption] = useState(0)
@@ -19,12 +20,11 @@ function App() {
         <EmergencyPage />
         : null
       }
-      {/*
       {
         navOption===2 ?
-        
+        <ExpensePage/>
         : null
-      } */}
+      }
       <div className="nav-div">
         <Navbar navOption={navOption} onNavPress={setNavOption}/>
       </div>
