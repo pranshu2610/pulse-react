@@ -5,7 +5,7 @@ import {ReactComponent as Diamond} from '../../assets/img/diamond.svg';
 import {ReactComponent as Gold} from '../../assets/img/gold.svg';
 import './expenseCard.scss';
 
-const ExpenseCard = ({imgUrl,name,address,distance,type,test,price,benefit_tag}) => {
+const ExpenseCard = ({filterParams,imgUrl,name,address,distance,type,test,price,benefit_tag}) => {
   return(
     <div className="expense-item">
       <div className="hospital-img" style={{backgroundImage: `url(${imgUrl})`}}>
@@ -18,19 +18,28 @@ const ExpenseCard = ({imgUrl,name,address,distance,type,test,price,benefit_tag})
         <p className="hospital-name">{name}</p>
         <p className="hospital-address">{address}</p>
         <div className="hospital-indicator">
-          <div className="indicator-item">
-            <Distance className="indicator-icon"/>
-            <p className="indicator-lable">{distance} Km</p>
-          </div>
-          <div className="indicator-item">
-            <Test className="indicator-icon"/>
-            <p className="indicator-lable">{test}</p>
-          </div>
+          {
+            filterParams.distance ? 
+            <div className="indicator-item">
+              <Distance className="indicator-icon"/>
+              <p className="indicator-lable">{distance} Km</p>
+            </div> : null
+          }
+          {
+            filterParams.noOfTest ? 
+            <div className="indicator-item">
+              <Test className="indicator-icon"/>
+              <p className="indicator-lable">{test}</p>
+            </div> : null
+          }
         </div>
         <p className="hospital-price">₹ {price}</p>
-        <div className="benefit-tag good">
-          <p className="benefit-lable">{benefit_tag}</p>
-        </div>
+        {
+          filterParams.banner ? 
+          <div className="benefit-tag good">
+            <p className="benefit-lable">{benefit_tag}</p>
+          </div> : null
+        }
       </div>
     </div>
   )

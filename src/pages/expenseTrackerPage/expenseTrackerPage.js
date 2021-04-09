@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExpenseCard from '../../components/expenseCard/expenseCard';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,16 +27,15 @@ const ExpensePage = () => {
   const [gold,setGold] = useState(true);
   const [silver,setSilver] = useState(true);
   const [transport,setTransport] = useState(false)
-  const [noOfTest,setNoOfTest] = useState(false)
-  const [distance,setDistance] = useState(false)
-  const [banner,setBanner] = useState(false)
-
+  const [noOfTest,setNoOfTest] = useState(true)
+  const [distance,setDistance] = useState(true)
+  const [banner,setBanner] = useState(true)
   const classes = useStyles();
   const handleChange = (event) => {
     setCheckup(event.target.value);
   };
-  console.log(checkup)
   const getCostData = () => {
+    console.log("HITTING SERVER")
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -62,14 +61,23 @@ const ExpensePage = () => {
         setData(resJSON.filters)})
       .catch(error => console.log('error', error));
   }
-  getCostData()
+  // if (!data.size) {
+  //   getCostData()
+  // }
 
   const generateCards = () => {
-    let resData = []
+    let paramData = {
+      distance: distance,
+      noOfTest: noOfTest,
+      banner: banner,
+      transport: transport,
+    }
+    let resData =[]
     data.forEach(item => {
       if ((item.Hpt_type && elite) || (item.Hpt_type && gold) || (item.Hpt_type && silver)) {
         resData.push(
           <ExpenseCard
+            filterParams={paramData}
             imgUrl={item.Hpt_image}
             name={item.Hpt_name}
             address={item.Hpt_address}
@@ -84,7 +92,9 @@ const ExpensePage = () => {
     })
     return resData;
   }
-  var sample = "elite"
+  useEffect(()=> {
+    getCostData()
+  },[checkup]);
   console.log(data)
   // console.log(sample,elite,gold,silver,((sample==="elite" && elite) || (sample==="gold" && gold) || (sample==="silver" && silver)))
   const cards = generateCards();
@@ -118,7 +128,7 @@ const ExpensePage = () => {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={checkup}
-            onChange={handleChange}
+            onChange={() => handleChange()}
           >
             <MenuItem value={"full_body"}>Full Body Checkup</MenuItem>
             <MenuItem value={"covid"}>COVID 19</MenuItem>
