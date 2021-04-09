@@ -4,12 +4,11 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Button,Checkbox} from '@material-ui/core';
 import { useNeonCheckboxStyles } from '@mui-treasury/styles/checkbox/neon';
-import {APIRequestHelper} from '../../helpers/APIRequest';
+import {API_ENDPOINT} from '../../helpers/APIRequest';
 
 const sampleData = ["chills","chest_pain","high_fever","pain_behind_the_eyes","constipation"];
 
 const setRawData = (options) => {
-  // console.log(options)
   let a = {}
   options.forEach(item => {
     a[item] = false
@@ -26,6 +25,11 @@ const Examine = ({closeTheExamine}) =>{
   const pushMessageStack = (msg) => {
     messageStack.push(msg)
   }
+  useEffect(() => {
+    var objDiv = document.getElementsByClassName("examine-chatbox");
+    objDiv[0].scrollTop = objDiv[0].scrollHeight;
+    console.log("SCROLLED to Bottom")
+  }, [step])
 
   const sendMessageToServer = async () => {
     let requestBody = []
@@ -51,8 +55,8 @@ const Examine = ({closeTheExamine}) =>{
       body: raw,
       redirect: 'follow'
     };
-    
-    fetch("https://pulse-squad.herokuapp.com/home/user/Examine", requestOptions)
+    let url = API_ENDPOINT + "/home/user/Examine"
+    fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -69,23 +73,6 @@ const Examine = ({closeTheExamine}) =>{
       pushMessageStack({sender: "server", content: ['We select more symptoms from options below?']})
     }
   }
-  // {
-  //   "predicted_diseases": [
-  //     "Common Cold", 
-  //     "Allergy", 
-  //     "Malaria", 
-  //     "(vertigo) Paroymsal  Positional Vertigo", 
-  //     "Pneumonia"
-  //   ], 
-  //   "probabilities": [
-  //     0.44717153906822205, 
-  //     0.06784116476774216, 
-  //     0.054890453815460205, 
-  //     0.04361933842301369, 
-  //     0.040818583220243454
-  //   ], 
-  //   "status": 200
-  // }
 
   const setCheckboxData = (option) => {
     let obj = JSON.parse(JSON.stringify(userOptions)) 

@@ -5,11 +5,11 @@ import { useGradientBtnStyles } from '@mui-treasury/styles/button/gradient';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import './emergencyPage.scss'
 import SimpleMap from '../../components/googlemap/googlemap';
+import {API_ENDPOINT} from '../../helpers/APIRequest';
 import './emergencyPage.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const EmergencyPage = () => {
   const chubbyStyles = useGradientBtnStyles({ chubby: true });
   const [age, setAge] = React.useState('');
-  const [origin,setOrigin]  = useState(["23.237696056902493","77.40107993996217"]);
+  const [origin, setOrigin]  = useState(["23.237696056902493","77.40107993996217"]);
   const [hospitals,setHospitals] = useState([])
 
   const classes = useStyles();
@@ -37,8 +37,12 @@ const EmergencyPage = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    let requestParam = "emergency"
+    if (age.length) {
+      requestParam = age
+    }
     var raw = JSON.stringify({
-      "speciality": age,
+      "speciality": requestParam,
       "origin_lati": origin[0],
       "origin_long": origin[1]
     });
@@ -49,8 +53,8 @@ const EmergencyPage = () => {
       body: raw,
       redirect: 'follow'
     };
-
-    fetch("https://pulse-squad.herokuapp.com/home/user/hospitals", requestOptions)
+    let url = API_ENDPOINT + "/home/user/hospitals";
+    fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -80,10 +84,10 @@ const EmergencyPage = () => {
                 onChange={handleChange}
                 // variant='outlined'
               >
-                <MenuItem value={"heart_attack"}>Heart Attack</MenuItem>
-                <MenuItem value={"stroke"}>Stroke</MenuItem>
-                <MenuItem value={"collapse"}>Collapse</MenuItem>
-                <MenuItem value={"bleeding"}>Bleeding</MenuItem>
+                <MenuItem value={"cardiology"}>Heart Attack</MenuItem>
+                <MenuItem value={"neurology"}>Stroke</MenuItem>
+                <MenuItem value={"physical_therapy"}>Collapse</MenuItem>
+                <MenuItem value={"first_aid"}>First Aid</MenuItem>
               </Select>
             </FormControl>
           </div>

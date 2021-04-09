@@ -1,0 +1,78 @@
+.detail-canvas {
+  background-color: rgb(96, 93, 107);
+  padding: 25px 20px;
+  position: fixed;
+  height: 100vh;
+  width: 90vw;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  .detail-options {
+    border-radius: 10px;
+    background-color: white;
+    height: 80%;
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .detail-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .examine-buttons {
+      margin-top: 15px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
+}
+.detail-list {
+  height: 90%;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: rgb(255, 255, 255);
+  .detail-card {
+    width: 100%;
+    height: 80px;
+    background-color: rgb(255, 242, 168);
+    margin: 5px 0;
+    padding: 4px;
+    .detail-inside {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .dot {
+        margin-right: 25px;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        &.active {
+          background-color: green;
+        }
+        &.inactive {
+          background-color: rgb(255, 0, 0);
+        }
+      }
+      .detail-name {
+        font-weight: 500;
+        margin: 0;
+        font-size: 18px;
+      }
+    }
+    .detail-subtitle {
+      margin: 5px 0;
+
+    }
+    .detail-relation {
+      margin: 5px 0;
+      
+    }
+  }
+}

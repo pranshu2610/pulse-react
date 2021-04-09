@@ -12,21 +12,28 @@ import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneO
 import SearchIcon from '@material-ui/icons/Search';
 import './dashboardPage.scss'
 import Examine from '../../components/examine/examine';
+import Details from '../../components/details/details';
 
 const userProfile = {
   name: "Rick Sanchez",
-  location: "Altamount Road"
+  location: "TT Nagar"
 }
 const DashboardPage = () => {
   const chubbyStyles = useGradientBtnStyles({ chubby: true });
   const [userName, setUserName] = useState(userProfile.name);
   const [location, setLocation] = useState(userProfile.location);
   const [viewExamine, setExamine] = useState(false);
+  const [viewDetail, setDetail] = useState(false);
   return(
     <div className="dashboard-canvas">
       {
         viewExamine ? 
         <Examine closeTheExamine={()=>setExamine(false)}/>
+        : null
+      }
+      {
+        viewDetail ? 
+        <Details closeTheDetails={()=>setDetail(false)} category={viewDetail}/>
         : null
       }
       <div className="dash-header">
@@ -52,15 +59,15 @@ const DashboardPage = () => {
       <div className="dash-feature">
         <p className="normal-sized-text">What are you looking for?</p>
         <div className="feat-scrollable-div">
-          <div className="feat-content">
+          <div className="feat-content" onClick={()=>setDetail("doctors")}>
             <img className="feat-img" src={doc} alt="doctors"/>
             <p className="small-sized-text">Doctors</p>
           </div>
-          <div className="feat-content">
+          <div className="feat-content" onClick={()=>setDetail("hospitals")}>
             <img className="feat-img" src={hos} alt="hospital"/>
             <p className="small-sized-text">Hospitals</p>
           </div>
-          <div className="feat-content">
+          <div className="feat-content" onClick={()=>setDetail("pharma")}>
             <img className="feat-img" src={pre} alt="pharmacy"/>
             <p className="small-sized-text">Pharmacy</p>
           </div>
