@@ -52,7 +52,7 @@ const Examine = ({closeTheExamine}) =>{
       redirect: 'follow'
     };
     
-    fetch("https://94cf2a266053.ngrok.io/home/user/Examine", requestOptions)
+    fetch("https://pulse-squad.herokuapp.com/home/user/Examine", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -65,7 +65,9 @@ const Examine = ({closeTheExamine}) =>{
         }
       })
       .catch(error => console.log('error', error));
-    pushMessageStack({sender: "server", content: ['We select more symptoms from options below?']})
+    if (requestBody.length) {
+      pushMessageStack({sender: "server", content: ['We select more symptoms from options below?']})
+    }
   }
   // {
   //   "predicted_diseases": [

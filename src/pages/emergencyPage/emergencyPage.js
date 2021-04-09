@@ -50,7 +50,7 @@ const EmergencyPage = () => {
       redirect: 'follow'
     };
 
-    fetch("https://94cf2a266053.ngrok.io/home/user/hospitals", requestOptions)
+    fetch("https://pulse-squad.herokuapp.com/home/user/hospitals", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
