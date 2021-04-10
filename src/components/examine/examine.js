@@ -43,9 +43,11 @@ const Examine = ({closeTheExamine}) =>{
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
+    var ID = Math.random().toString(36).substr(2, 9);
+
     console.log("INPUT",requestBody);
     var raw = JSON.stringify({
-      "username": "koko",
+      "username": ID,
       "symptoms": requestBody
     });
     

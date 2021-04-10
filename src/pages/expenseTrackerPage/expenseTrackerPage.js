@@ -31,7 +31,9 @@ const ExpensePage = () => {
   const [distance,setDistance] = useState(true)
   const [banner,setBanner] = useState(true)
   const classes = useStyles();
+
   const handleChange = (event) => {
+    console.log(event)
     setCheckup(event.target.value);
   };
   const getCostData = () => {
@@ -73,8 +75,18 @@ const ExpensePage = () => {
       transport: transport,
     }
     let resData =[]
+    let hospitalNotToInclude = new Set()
+    if (!elite) {
+      hospitalNotToInclude.add("elite")
+    }
+    if (!gold) {
+      hospitalNotToInclude.add("gold")
+    }
+    if (!silver) {
+      hospitalNotToInclude.add("silver")
+    }
     data.forEach(item => {
-      if ((item.Hpt_type && elite) || (item.Hpt_type && gold) || (item.Hpt_type && silver)) {
+      if (!hospitalNotToInclude.has(item.Hpt_type)) {
         resData.push(
           <ExpenseCard
             filterParams={paramData}
@@ -83,7 +95,7 @@ const ExpensePage = () => {
             address={item.Hpt_address}
             distance={(item.distance/1000).toFixed(1)}
             type={item.Hpt_type}    
-            test={6}
+            test={item.Hpt_length}
             price={item.Hpt_cost.total}
             benefit_tag={"You'll Save 30%"}
           />
@@ -96,7 +108,7 @@ const ExpensePage = () => {
     getCostData()
   },[checkup]);
   console.log(data)
-  // console.log(sample,elite,gold,silver,((sample==="elite" && elite) || (sample==="gold" && gold) || (sample==="silver" && silver)))
+
   const cards = generateCards();
   return(
     <div className="expense-canvas">
@@ -128,13 +140,13 @@ const ExpensePage = () => {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={checkup}
-            onChange={() => handleChange()}
+            onChange={handleChange}
           >
             <MenuItem value={"full_body"}>Full Body Checkup</MenuItem>
             <MenuItem value={"covid"}>COVID 19</MenuItem>
             <MenuItem value={"cardiac_system"}>ECG</MenuItem>
             <MenuItem value={"eye"}>Eyesight Checkup</MenuItem>
-            <MenuItem value={"custom"}>Custom</MenuItem>
+            {/* <MenuItem value={"custom"}>Custom</MenuItem> */}
           </Select>
         </FormControl>
         <Button variant="outlined" color="primary" onClick={()=>setFilter(true)}>
