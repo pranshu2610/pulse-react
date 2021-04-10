@@ -19,6 +19,7 @@ const messageStack = []
 const Examine = ({closeTheExamine}) =>{
   const [userOptions, setUserOptions] = useState(setRawData(sampleData))
   const [step,setStep] = useState(0)
+  const [userID, setUserID] = useState(0)
   const [showRes,setShowRes] = useState()
   const neonStyles = useNeonCheckboxStyles();
 
@@ -43,11 +44,9 @@ const Examine = ({closeTheExamine}) =>{
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
-    var ID = Math.random().toString(36).substr(2, 9);
-
     console.log("INPUT",requestBody);
     var raw = JSON.stringify({
-      "username": ID,
+      "username": userID,
       "symptoms": requestBody
     });
     
@@ -127,6 +126,10 @@ const Examine = ({closeTheExamine}) =>{
 
   if (!messageStack.length) {
     pushMessageStack({sender: 'server', content: ['Hi Rick! How are you?','Can you tell us how do you feel rightnow?']})
+  }
+  if (!userID) {
+    var ID = Math.random().toString(36).substr(2, 9);
+    setUserID(ID)
   }
   console.log("RENDER")
   let checkboxes = displayCheckboxes();
