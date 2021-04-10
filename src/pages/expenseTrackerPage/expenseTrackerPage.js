@@ -55,8 +55,8 @@ const ExpensePage = () => {
       body: raw,
       redirect: 'follow'
     };
-
-    fetch("https://pulse-squad.herokuapp.com/home/user/cost/filters", requestOptions)
+    let url = API_ENDPOINT + "/home/user/cost/filters"
+    fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
         let resJSON = JSON.parse(result)

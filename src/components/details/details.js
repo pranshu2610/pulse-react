@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import './details.scss'
 import {API_ENDPOINT} from '../../helpers/APIRequest';
-import {Button,Checkbox} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
 const Details = ({closeTheDetails,category}) =>{
   const [data, setData] = useState([]);
@@ -49,10 +49,23 @@ const Details = ({closeTheDetails,category}) =>{
             <div className="detail-card">
               <div className="detail-inside">
                 <p className="detail-name">{item.Hpt_name}</p>
-                {item.status==="True" ? <div className="dot active"/> : <div className="dot inactive"/>}
+                <div className="dot active"/>
               </div>
               <p className="detail-subtitle">{item.Hpt_speciality.length} Specialities</p>
               <p className="detail-relation">{item.Hpt_type}</p>
+            </div>
+          ))
+        : null
+      }
+      {
+        data.length && category==="pharmacy" ?
+          data.map(item => (
+            <div className="detail-card">
+              <div className="detail-inside">
+                <p className="detail-name">{item.Phar_name}</p>
+              </div>
+              <p className="detail-subtitle">{item.Phar_phone} {item.Phar_time}</p>
+              <p className="detail-relation">{item.Phar_address}</p>
             </div>
           ))
         : null

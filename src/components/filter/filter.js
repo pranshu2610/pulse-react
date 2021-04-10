@@ -1,9 +1,7 @@
-import React,{useState, useEffect} from 'react';
-import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
+import React from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Button,Checkbox} from '@material-ui/core';
 import { useNeonCheckboxStyles } from '@mui-treasury/styles/checkbox/neon';
-import {API_ENDPOINT} from '../../helpers/APIRequest';
 import './filter.scss'
 
 const Filter = ({

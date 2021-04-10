@@ -4,9 +4,9 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Button,Checkbox} from '@material-ui/core';
 import { useNeonCheckboxStyles } from '@mui-treasury/styles/checkbox/neon';
-import {API_ENDPOINT} from '../../helpers/APIRequest';
+import {API_ENDPOINT,SYMPTOMS} from '../../helpers/APIRequest';
 
-const sampleData = ["chills","chest_pain","high_fever","pain_behind_the_eyes","constipation"];
+const sampleData = SYMPTOMS
 
 const setRawData = (options) => {
   let a = {}
@@ -124,6 +124,21 @@ const Examine = ({closeTheExamine}) =>{
     return msgStack
   }
 
+  const getProbabilityInWords = (value) => {
+    if (value >= 75) {
+      return "Very High chances"
+    }
+    else if (value >= 50) {
+      return "High Chances"
+    }
+    else if (value >= 25) {
+      return "Moderate Chances"
+    }
+    else {
+      return "Low Chances"
+    }
+  }
+
   if (!messageStack.length) {
     pushMessageStack({sender: 'server', content: ['Hi Rick! How are you?','Can you tell us how do you feel rightnow?']})
   }
@@ -144,7 +159,7 @@ const Examine = ({closeTheExamine}) =>{
       !showRes ? 
       <div className="examine-options">
         <p className="options-title">{checkboxes.length>1 ? "Select the Options" : "Are you suffering from this symptom? You can also Tap Next to skip"}</p>
-        {checkboxes}
+        <div className="checkbox-scroll">{checkboxes}</div>
         <div className="examine-buttons">
         <Button onClick={closeTheExamine} variant="outlined" color="secondary">
           Close
@@ -156,7 +171,7 @@ const Examine = ({closeTheExamine}) =>{
       </div>
       :
       <div className="examine-options result">
-        <p className="options-title">You are likely suffering from {showRes.predicted_diseases[0]} with {(showRes.probabilities[0]*100).toFixed(2)}% chances</p>
+        <p className="options-title">You are likely suffering from {showRes.predicted_diseases[0]} with {getProbabilityInWords((showRes.probabilities[0]*100).toFixed(2))}</p>
         <p className="options-content">{showRes.description}</p>
         {showRes.precautions.map(item => (
           <p className="options-content">✨ {item}</p>

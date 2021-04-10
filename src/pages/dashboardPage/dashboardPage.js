@@ -16,7 +16,7 @@ import Details from '../../components/details/details';
 
 const userProfile = {
   name: "Rick Sanchez",
-  location: "TT Nagar"
+  location: "TT Nagar, Bhopal"
 }
 const DashboardPage = () => {
   const chubbyStyles = useGradientBtnStyles({ chubby: true });
@@ -67,7 +67,7 @@ const DashboardPage = () => {
             <img className="feat-img" src={hos} alt="hospital"/>
             <p className="small-sized-text">Hospitals</p>
           </div>
-          <div className="feat-content" onClick={()=>setDetail("pharma")}>
+          <div className="feat-content" onClick={()=>setDetail("pharmacy")}>
             <img className="feat-img" src={pre} alt="pharmacy"/>
             <p className="small-sized-text">Pharmacy</p>
           </div>
