@@ -5,13 +5,16 @@ import {ReactComponent as Diamond} from '../../assets/img/diamond.svg';
 import {ReactComponent as Gold} from '../../assets/img/gold.svg';
 import './expenseCard.scss';
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 const ExpenseCard = ({filterParams,imgUrl,name,address,distance,type,test,price,benefit_tag}) => {
   return(
     <div className="expense-item">
       <div className="hospital-img" style={{backgroundImage: `url(${imgUrl})`}}>
         <div className={`hos-tag ${type}`} >
           {type==="elite" ? <Diamond className="hos-icon"/>:<Gold className="hos-icon"/>}
-          <p className="hos-title">{type}</p>
+          <p className="hos-title">{capitalizeFirstLetter(type)}</p>
         </div>
       </div>
       <div className="hospital-detail">

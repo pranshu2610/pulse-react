@@ -21,7 +21,7 @@
     background-size: cover;
     background-position: center;
     .hos-tag {
-      border-radius: 0 0 0 14px;
+      border-radius: 0 12px 0 14px;
       // border: black 1px solid;
       width: 80px;
       display: flex;
@@ -30,10 +30,10 @@
       color: white;
       padding: 1px 0;
       &.elite {
-        background-color: indigo;
+        background-color: rgb(135, 14, 221);
       }
       &.gold {
-        background-color: rgb(255, 187, 0);
+        background-color: rgb(252, 185, 0);
       }
       &.silver {
         background-color: rgb(94, 94, 94);
@@ -46,7 +46,7 @@
       }
       .hos-title {
         margin: 0;
-        font-weight: 600;
+        font-weight: 400;
       }
     }
   }
@@ -59,12 +59,14 @@
     height: 150px;
     .hospital-name {
       margin: 0;
-      font-size: 22px;
+      font-size: 20px;
+      font-weight: 500;
     }
     .hospital-address {
       margin: 0;
-      font-size: 16px;
+      font-size: 15px;
       margin-top: -5px;
+      color: rgb(126, 126, 126);
     }
     .hospital-indicator {
       width: 100%;
@@ -78,41 +80,44 @@
         align-items: center;
         margin-right: 10px;
         .indicator-icon {
-          height: 25px;
-          width: 25px;
+          height: 23px;
+          width: 23px;
           margin-right: 5px;
         }
         .indicator-lable {
           margin: 0;
-          font-weight: 600;
+          font-size: 14px;
+          font-weight: 500;
         }
       }
     }
     .hospital-price {
       margin: 0;
-      font-size: 27px;
+      font-size: 25px;
+      font-weight: 500;
     }
     .benefit-tag {
       align-self: flex-end;
-      width: 140px;
+      width: 130px;
       padding: 3px;
       margin-bottom: -10px;
       margin-right: -3px;
-      border-radius: 0 0 14px 0;
+      border-radius: 10px 0 14px 0;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
       // border: black 1px solid;
       &.good {
-        background-color: #4DA141;
+        background-color: #63b358;
       }
       &.bad {
         background-color: #ff446d;
       }
       .benefit-lable {
         margin: 0;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 400;
       }
     }
   }

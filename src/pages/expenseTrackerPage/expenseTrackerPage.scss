@@ -1,5 +1,5 @@
 .expense-canvas {
-  background-color: rgb(137, 136, 156);
+  background-color: rgb(255, 255, 255);
   padding-bottom: 85px;
   .expense-top {
     display: flex;
@@ -7,6 +7,9 @@
     align-items: center;
     background-color: white;
     border-radius: 0 0 20px 20px;
+    box-shadow: 0px 14px 47px -10px rgba(0,0,0,0.26);
+-webkit-box-shadow: 0px 14px 47px -10px rgba(0,0,0,0.26);
+-moz-box-shadow: 0px 14px 47px -10px rgba(0,0,0,0.26);
   }
   .expense-scroll {
     overflow-y: scroll;

@@ -9,6 +9,9 @@
   border-radius: 50px 50px 0 0;
   height: 80px;
   color: #4DA141;
+  box-shadow: 0px -2px 47px -10px rgba(0,0,0,0.26);
+-webkit-box-shadow: 0px -2px 47px -10px rgba(0,0,0,0.26);
+-moz-box-shadow: 0px -2px 47px -10px rgba(0,0,0,0.26);
   .nav-item {
     display: flex;
     justify-content: space-around;
