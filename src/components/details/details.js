@@ -1,10 +1,12 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
+import {SearchBox} from '../searchbox/search-box';
 import './details.scss'
 import {API_ENDPOINT} from '../../helpers/APIRequest';
 import {Button} from '@material-ui/core';
 
 const Details = ({closeTheDetails,category}) =>{
   const [data, setData] = useState([]);
+  const [searchFields, setSearchField]= useState('');
   const getNecessaryData = () => {
     var requestOptions = {
       method: 'GET',
@@ -18,20 +20,39 @@ const Details = ({closeTheDetails,category}) =>{
         setData(resJSON[category])})
       .catch(error => console.log('error', error));
   }
-  console.log(data)
-  if (!data.length) {
+
+  useEffect(()=> {
+    console.log("Called Once")
     getNecessaryData()
+  },[])
+
+  var filteredData = data;
+  if (searchFields!=='') {
+    if(category==="doctors") {
+      filteredData = data.filter(item => item.Dr_name.toLowerCase().includes(searchFields.toLowerCase()))
+    }
+    else if(category==="hospitals") {
+      filteredData = data.filter(item => item.Hpt_name.toLowerCase().includes(searchFields.toLowerCase()))
+    }
+    else if(category==="pharmacy") {
+      filteredData = data.filter(item => item.Phar_name.toLowerCase().includes(searchFields.toLowerCase()))
+    }
   }
+
   const name = category
   const nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1)
   return (
   <div className="detail-canvas">
     <div className="detail-options">
       <p className="detail-title">List of {nameCapitalized}</p>
+      <SearchBox
+        placeholder={`Search for ${nameCapitalized}`}
+        handleChanges={e=>setSearchField(e.target.value)}
+      />
       <div className="detail-list">
       {
-        data.length && category==="doctors" ?
-          data.map(item => (
+        filteredData.length && category==="doctors" ?
+          filteredData.map(item => (
             <div className="detail-card">
               <div className="detail-inside">
                 <p className="detail-name">{item.Dr_name}</p>
@@ -44,8 +65,8 @@ const Details = ({closeTheDetails,category}) =>{
         : null
       }
       {
-        data.length && category==="hospitals" ?
-          data.map(item => (
+        filteredData.length && category==="hospitals" ?
+          filteredData.map(item => (
             <div className="detail-card">
               <div className="detail-inside">
                 <p className="detail-name">{item.Hpt_name}</p>
@@ -58,8 +79,8 @@ const Details = ({closeTheDetails,category}) =>{
         : null
       }
       {
-        data.length && category==="pharmacy" ?
-          data.map(item => (
+        filteredData.length && category==="pharmacy" ?
+          filteredData.map(item => (
             <div className="detail-card">
               <div className="detail-inside">
                 <p className="detail-name">{item.Phar_name}</p>
